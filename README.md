@@ -36,8 +36,29 @@ This is a simple Django REST framework project named "RestBasics."
    ```bash
       django-admin startproject MyDjangoProject .
    ```
-      
-5. Create Model:
+   
+5. Create app
+    ```bash
+       python manage.py startapp app_my_api
+    ```
+6. Create super user (Accessing the Admin Interface)
+    ```bash
+       python manage.py createsuperuser
+    ```
+7. Add `rest_framework` and `my_api` application into settings.py
+    ```python
+       INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            `rest_framework`,
+            `app_my_api`
+        ]
+    ```
+8. Create Model:
    ```python
      from django.db import models
      class Article(models.model):
@@ -51,27 +72,7 @@ This is a simple Django REST framework project named "RestBasics."
    ```
    - `__str__(self)` is a special method in Python classes that is called when you use the str() function on an instance of the class. In the context of a Django model, the __str__ method is used to specify a human-readable representation of the model instance.    
 
-6. Create app
-    ```bash
-       python manage.py startapp app_my_api
-    ```
-7. Create super user (Accessing the Admin Interface)
-    ```bash
-       python manage.py createsuperuser
-    ```
-8. Add `rest_framework` and `my_api` application into settings.py
-    ```python
-       INSTALLED_APPS = [
-            'django.contrib.admin',
-            'django.contrib.auth',
-            'django.contrib.contenttypes',
-            'django.contrib.sessions',
-            'django.contrib.messages',
-            'django.contrib.staticfiles',
-            `rest_framework`,
-            `app_my_api`
-        ]
-    ```
+    
 9. Create and apply migrations:
    - It is a crucial step in Django project for setting up and applying database change
     ```bash
