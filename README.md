@@ -34,7 +34,7 @@ This is a simple Django REST framework project named "RestBasics."
       ```
 4. Create Project
    ```bash
-      django-admin startproject MyDjangoProject
+      django-admin startproject MyDjangoProject .
    ```
       
 5. Create Model:
@@ -53,7 +53,7 @@ This is a simple Django REST framework project named "RestBasics."
 
 6. Create app
     ```bash
-       python manage.py startapp app_my_api .
+       python manage.py startapp app_my_api
     ```
 7. Create super user (Accessing the Admin Interface)
     ```bash
