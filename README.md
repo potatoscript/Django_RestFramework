@@ -215,3 +215,82 @@ This is a simple Django REST framework project named "RestBasics."
 
 [Django rest framework documentation](https://django-rest-framework.org/tutorial/1-serialization/)
 
+
+## Setting Up Django with IIS
+Setting up Django with IIS (Internet Information Services) involves configuring IIS to work with the WSGI server that runs your Django application. Here's a step-by-step guide on how to set up Django with IIS:
+
+### Prerequisites:
+1. **Install Python:**
+   Ensure that Python is installed on your server. You can download Python from the [official Python website](https://www.python.org/downloads/).
+
+2. **Install Django:**
+   Install Django using `pip`:
+
+   ```bash
+   pip install django
+   ```
+
+3. **Install `wfastcgi`:**
+   `wfastcgi` is a WSGI server for IIS. Install it using `pip`:
+
+   ```bash
+   pip install wfastcgi
+   ```
+
+### Configure Django Project:
+1. **Configure `web.config`:**
+   In your Django project folder, create a file named `web.config` with the following content:
+
+   ```xml
+   <configuration>
+     <system.webServer>
+       <handlers>
+         <add name="Python FastCGI" path="*" verb="*" modules="FastCgiModule" scriptProcessor="C:\Path\To\Python\python.exe|C:\Path\To\Python\Scripts\wfastcgi.exe" resourceType="Unspecified" requireAccess="Script" />
+       </handlers>
+       <directoryBrowse enabled="false" />
+       <staticContent>
+         <remove fileExtension=".py" />
+         <mimeMap fileExtension=".py" mimeType="text/plain" />
+       </staticContent>
+     </system.webServer>
+   </configuration>
+   ```
+
+   Replace `C:\Path\To\Python` with the actual path where Python is installed.
+
+2. **Configure Django Settings:**
+   Update your Django settings to allow the host header. In your `settings.py` file, add the following:
+
+   ```python
+   ALLOWED_HOSTS = ['*']
+   ```
+
+   This allows any host to access your Django application. In a production environment, you should replace `'*'` with the actual domain or IP address.
+
+### Configure IIS:
+1. **Install IIS:**
+   Ensure that IIS is installed on your server. You can install it using the Server Manager on Windows Server or through the "Turn Windows features on or off" menu on Windows.
+
+2. **Configure Site in IIS:**
+   Open IIS Manager, and create a new site for your Django application. Set the physical path to the folder containing your Django project, and set the binding to the desired port.
+
+3. **Install CGI Feature:**
+   In IIS Manager, go to "Server Roles" > "Web Server (IIS)" > "Web Server" > "Application Development" and ensure that "CGI" is installed.
+
+4. **Restart IIS:**
+   Restart IIS to apply the changes.
+
+### Run Django Application:
+1. **Start WSGI Server:**
+   In your Django project folder, run the following command to start the `wfastcgi` server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   This starts the WSGI server, allowing IIS to forward requests to your Django application.
+
+2. **Access the Application:**
+   Open a web browser and navigate to the URL of your IIS site. You should see your Django application running.
+
+Remember to configure your Django project and IIS appropriately for security and performance considerations in a production environment.
